@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class FacultyServiceImpl implements  FacultyService{
     private final FacultyRepository facultyRepository;
-    @Autowired
+
     public FacultyServiceImpl(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
