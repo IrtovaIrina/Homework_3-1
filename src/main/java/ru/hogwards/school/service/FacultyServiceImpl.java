@@ -1,47 +1,59 @@
 package ru.hogwards.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwards.school.model.Faculty;
-import java.util.HashMap;
+import ru.hogwards.school.repository.FacultyRepository;
+
+import java.util.Collection;
+import java.util.Optional;
+
 @Service
 public class FacultyServiceImpl implements  FacultyService{
-    private HashMap<Long, Faculty> facultiesMap;
-    private Long count = 0L;
-    @Override
-    public HashMap<Long, Faculty> getFacultyMap(){
-        return facultiesMap;
+    private final FacultyRepository facultyRepository;
+    @Autowired
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
     }
     @Override
-    public Faculty addFaculty(String name, String color) {
-        count++;
-        Faculty faculty = new Faculty(count, name, color);
-        facultiesMap.put(faculty.getId(), faculty);
+    public Faculty add(String name, String color) {
+        Faculty faculty = new Faculty(name, color);
+        facultyRepository.save(faculty);
         return faculty;
     }
     @Override
-    public Faculty removeFaculty(Long id) {
-        Faculty faculty = facultiesMap.get(id);
-        if(!facultiesMap.containsKey(id)){
-            throw new RuntimeException("Вопрос не найден!");
+    public Faculty remove(Long id) {
+        Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
+        if (facultyInOpt.isEmpty()) {
+            throw new RuntimeException("Факультет c id " + id + " не найден");
         }
-        facultiesMap.remove(id);
-        count--;
+        Faculty faculty = facultyInOpt.get();
+        facultyRepository.delete(faculty);
         return faculty;
     }
 
     @Override
-    public Faculty findFaculty(Long id) {
-        Faculty faculty = facultiesMap.get(id);
-        if(!facultiesMap.containsKey(id)){
-            throw new RuntimeException("Вопрос не найден!");
+    public Faculty find(Long id) {
+        Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
+        if (facultyInOpt.isEmpty()) {
+            throw new RuntimeException("Факультет c id " + id + " не найден");
         }
+        return facultyRepository.findById(id).get();
+    }
+    @Override
+    public Faculty update(Long id, String name,String color){
+        Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
+        if (facultyInOpt.isEmpty()) {
+            throw new RuntimeException("Факультет c id " + id + " не найден");
+        }
+        Faculty faculty = facultyInOpt.get();
+        faculty.setName(name);
+        faculty.setColor(color);
+        facultyRepository.save(faculty);
         return faculty;
     }
     @Override
-    public Faculty updateFaculty(Long id, String name,String color){
-        Faculty faculty = facultiesMap.get(id);
-        faculty.setName(name);
-        faculty.setColor(color);
-        return faculty;
+    public Collection<Faculty> getAll(){
+        return facultyRepository.findAll();
     }
 }

@@ -1,11 +1,23 @@
 package ru.hogwards.school.model;
 
-import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Objects;
+@Entity
 public class Student {
-    private final Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
     private String name;
     private int age;
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    public Student() {
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -41,9 +53,4 @@ public class Student {
         this.age = age;
     }
 
-    public Student(Long id, String name, int age) {
-        this.name = name;
-        this.age = age;
-        this.id = id;
-    }
 }
