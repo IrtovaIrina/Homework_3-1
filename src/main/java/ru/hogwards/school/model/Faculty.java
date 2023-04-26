@@ -1,16 +1,30 @@
 package ru.hogwards.school.model;
 
+import java.util.Objects;
+
 public class Faculty {
-    private Long id;
+    private final Long id;
     private String name;
     private String color;
-    private Long facultyCounter = -1L;
-    public Long getId() {
-        return id;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Faculty faculty = (Faculty) o;
+        return Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getColor() != null ? getColor().hashCode() : 0);
+        return result;
+    }
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -29,10 +43,9 @@ public class Faculty {
         this.color = color;
     }
 
-    public Faculty(String name, String color) {
+    public Faculty(Long id, String name, String color) {
         this.name = name;
         this.color = color;
-        facultyCounter++;
-        id = facultyCounter;
+        this.id = id;
     }
 }

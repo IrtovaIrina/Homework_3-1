@@ -1,18 +1,30 @@
 package ru.hogwards.school.model;
 
+import java.util.Objects;
+
 public class Student {
-    private Long id;
+    private final Long id;
     private String name;
     private int age;
-    private static Long studentsCount = -1L;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != 0 ? Objects.hashCode(getId()) : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getAge() != 0 ? Objects.hashCode(getAge()) : 0);
+        return result;
+    }
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -29,10 +41,9 @@ public class Student {
         this.age = age;
     }
 
-    public Student(String name, int age) {
+    public Student(Long id, String name, int age) {
         this.name = name;
         this.age = age;
-        studentsCount++;
-        id = studentsCount;
+        this.id = id;
     }
 }
