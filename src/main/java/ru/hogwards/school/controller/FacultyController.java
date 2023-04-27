@@ -1,7 +1,6 @@
 package ru.hogwards.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwards.school.model.Faculty;
 import ru.hogwards.school.service.FacultyService;
@@ -17,8 +16,8 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
-        return ResponseEntity.ok(facultyService.find(id));
+    public Faculty getFaculty(@PathVariable Long id) {
+        return facultyService.find(id);
     }
 
     @PostMapping
@@ -27,13 +26,12 @@ public class FacultyController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Faculty> updateFaculty(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("color") String color) {
-        return ResponseEntity.ok(facultyService.update(id, name, color));
+    public Faculty updateFaculty(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("color") String color) {
+        return facultyService.update(id, name, color);
     }
-
     @DeleteMapping("{id}")
-    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
-        return ResponseEntity.ok(facultyService.remove(id));
+    public Faculty deleteFaculty(@PathVariable Long id) {
+        return facultyService.remove(id);
     }
 }
 
