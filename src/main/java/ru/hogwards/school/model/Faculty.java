@@ -3,6 +3,9 @@ package ru.hogwards.school.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Collection;
+
 @Entity
 public class Faculty {
 
@@ -13,6 +16,15 @@ public class Faculty {
     private String name;
 
     private String color;
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Student> students;
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
 
     public Faculty() {
     }
