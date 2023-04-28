@@ -3,6 +3,7 @@ package ru.hogwards.school.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwards.school.model.Faculty;
 import ru.hogwards.school.model.Student;
 import ru.hogwards.school.service.StudentService;
 
@@ -40,5 +41,9 @@ public class StudentController {
         }else{
             return studentService.getAll();
         }
+    }
+    @GetMapping("{students_id}")
+    public ResponseEntity<Collection<Student>> findByFaculty_id(@RequestParam("students_id")Long students_id){
+        return ResponseEntity.ok(studentService.findByFaculty_id(students_id));
     }
 }
