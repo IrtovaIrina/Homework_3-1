@@ -12,5 +12,5 @@ public interface FacultyService {
     Faculty find(Long id);
     Faculty update(Long id, String name,String color);
     Collection<Faculty> getAll();
-
+    Collection<Faculty> getAllByNameAndColor(String name, String color);
 }

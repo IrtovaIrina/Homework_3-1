@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 public class Faculty {
@@ -16,15 +16,6 @@ public class Faculty {
     private String name;
 
     private String color;
-    @OneToMany(mappedBy = "faculty")
-    private Collection<Student> students;
-    public Collection<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Collection<Student> students) {
-        this.students = students;
-    }
 
     public Faculty() {
     }
@@ -54,6 +45,17 @@ public class Faculty {
     public void setColor(String color) {
         this.color = color;
     }
+    @OneToMany(mappedBy = "faculty")
+    private Set<Student> students;
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -10,17 +10,10 @@ public class Student {
     private Long id;
     private String name;
     private int age;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
-
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
     public Student(String name, int age) {
         this.name = name;
         this.age = age;
@@ -28,6 +21,14 @@ public class Student {
     }
     public Student() {
     }
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
 
     @Override
     public boolean equals(Object o) {
