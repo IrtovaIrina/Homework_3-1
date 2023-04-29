@@ -79,4 +79,18 @@ public class StudentServiceImplTest {
         when(repository.findAll()).thenReturn((List<Student>) students);
         Assertions.assertEquals(service.getAll(), students);
     }
+    @Test
+    public void getAllByAge_success() {
+        students.add(q);
+        students.add(q2);
+        when(repository.findByAgeBetween(12,30)).thenReturn((List<Student>) students);
+        Assertions.assertEquals(service.getAllByAge(12,30), students);
+    }
+    @Test
+    public void findByFaculty_id_success() {
+        students.add(q);
+        students.add(q2);
+        when(repository.findAll()).thenReturn((List<Student>) students);
+        Assertions.assertEquals(service.getAll(), students);
+    }
 }

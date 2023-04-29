@@ -16,10 +16,7 @@ import ru.hogwards.school.service.FacultyServiceImpl;
 import ru.hogwards.school.service.StudentService;
 import ru.hogwards.school.service.StudentServiceImpl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -34,6 +31,7 @@ public class FacultyServiceImplTest {
     Faculty q = new Faculty("Grifindor", "Red");
     Faculty q2 = new Faculty("Sliserin", "Blue");
     private Collection<Faculty> faculties = new ArrayList<>();
+    private Collection<Student> students = new ArrayList<>();
 
     @Test
     public void add_success() {
@@ -85,6 +83,21 @@ public class FacultyServiceImplTest {
         faculties.add(q2);
         when(repository.findAll()).thenReturn((List<Faculty>) faculties);
         Assertions.assertEquals(service.getAll(), faculties);
+    }
+    @Test
+    public void getAllByNameAndColor_success() {
+        faculties.add(q);
+        when(repository.findFacultiesByNameIgnoreCaseAndColorIgnoreCase("Grifindor","Red")).thenReturn((List<Faculty>) faculties);
+        Assertions.assertEquals(service.getAllByNameAndColor("Grifindor","Red"), faculties);
+    }
+    @Test
+    public void findByStudents_id_success() {
+        Student student = new Student("Tom",12);
+        students.add(student);
+        faculties.add(q);
+        faculties.add(q2);
+        when(repository.findFacultyByStudents_id(1L)).thenReturn(q2);
+        Assertions.assertEquals(service.findByStudents_id(1L), q2);
     }
 
 }
