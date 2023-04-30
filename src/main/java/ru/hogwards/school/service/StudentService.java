@@ -11,5 +11,7 @@ public interface StudentService {
     Student find(Long id);
     Student update(Long id, String name,int age);
     Collection<Student> getAll();
+    Collection<Student> getAllByAge(int min, int max);
+    Collection<Student> findByFaculty_id(Long faculty_id);
 
 }
