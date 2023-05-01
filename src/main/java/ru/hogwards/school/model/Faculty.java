@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Faculty {
@@ -29,10 +30,19 @@ public class Faculty {
     public Faculty() {
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Faculty(Long id, String name, String color) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+    }
+
     public Faculty(String name, String color) {
         this.name = name;
         this.color = color;
-        this.id = id;
     }
 
     public Long getId() {
@@ -58,20 +68,14 @@ public class Faculty {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Faculty)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-
-        if (getId() != null ? !getId().equals(faculty.getId()) : faculty.getId() != null) return false;
-        if (getName() != null ? !getName().equals(faculty.getName()) : faculty.getName() != null) return false;
-        return getColor() != null ? getColor().equals(faculty.getColor()) : faculty.getColor() == null;
+        return name.equals(faculty.name) && color.equals(faculty.color)
+                && id.equals(faculty.id);
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getColor() != null ? getColor().hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, color);
     }
 }

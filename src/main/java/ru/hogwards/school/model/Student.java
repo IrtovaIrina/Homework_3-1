@@ -5,6 +5,10 @@ import javax.persistence.*;
 import java.util.Objects;
 @Entity
 public class Student {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -21,29 +25,15 @@ public class Student {
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
+
     public Student(String name, int age) {
         this.name = name;
         this.age = age;
-        this.id = id;
     }
+
     public Student() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return age == student.age && Objects.equals(name, student.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != 0 ? Objects.hashCode(getId()) : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getAge() != 0 ? Objects.hashCode(getAge()) : 0);
-        return result;
-    }
     public long getId() {
         return id;
     }
@@ -63,4 +53,16 @@ public class Student {
         this.age = age;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && id.equals(student.id) && name.equals(student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age);
+    }
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwards.school.model.Faculty;
-import ru.hogwards.school.model.Student;
 import ru.hogwards.school.service.FacultyService;
 
 import java.util.Collection;

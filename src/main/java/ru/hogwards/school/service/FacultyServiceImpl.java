@@ -7,7 +7,6 @@ import ru.hogwards.school.repository.FacultyRepository;
 
 import java.util.Collection;
 import java.util.Optional;
-
 @Service
 public class FacultyServiceImpl implements  FacultyService{
     private final FacultyRepository facultyRepository;
@@ -17,12 +16,18 @@ public class FacultyServiceImpl implements  FacultyService{
     }
     @Override
     public Faculty add(String name, String color) {
-        Faculty faculty = new Faculty(name, color);
+        Faculty faculty = new Faculty();
+        faculty.setName(name);
+        faculty.setColor(color);
         facultyRepository.save(faculty);
         return faculty;
     }
     @Override
     public Faculty remove(Long id) {
+        //if (facultyRepository.findId(id) == 0L)
+            //throw new RuntimeException();
+        //Faculty faculty = facultyRepository.getById(id);
+        //facultyRepository.delete(faculty);
         Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
         if (facultyInOpt.isEmpty()) {
             throw new RuntimeException("Факультет c id " + id + " не найден");
