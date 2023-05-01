@@ -31,7 +31,7 @@ public class StudentServiceImplTest {
     @Test
     public void add_success() {
         when(repository.save(q)).thenReturn(q);
-        Assertions.assertEquals(service.add("Ron",15), q);
+        Assertions.assertEquals(service.add("Ron", 15), q);
     }
 
     @Test

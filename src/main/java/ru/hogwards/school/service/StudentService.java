@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public interface StudentService {
+    Student add(String name, int age, Long facultyId);
     Student add(String name, int age);
     Student remove(Long id);
     Student find(Long id);

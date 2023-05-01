@@ -24,38 +24,33 @@ public class FacultyServiceImpl implements  FacultyService{
     }
     @Override
     public Faculty remove(Long id) {
-        //if (facultyRepository.findId(id) == 0L)
-            //throw new RuntimeException();
-        //Faculty faculty = facultyRepository.getById(id);
-        //facultyRepository.delete(faculty);
-        Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
-        if (facultyInOpt.isEmpty()) {
-            throw new RuntimeException("Факультет c id " + id + " не найден");
+        Optional<Faculty> faculty = facultyRepository.findById(id);
+        if (faculty.isPresent()){
+            facultyRepository.delete(faculty.get());
+            return faculty.get();
         }
-        Faculty faculty = facultyInOpt.get();
-        facultyRepository.delete(faculty);
-        return faculty;
+        throw new RuntimeException("Факультет c id " + id + " не найден");
     }
 
     @Override
-    public Faculty find(Long id) {
-        Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
-        if (facultyInOpt.isEmpty()) {
-            throw new RuntimeException("Факультет c id " + id + " не найден");
+    public Faculty find(Long id) throws Exception {
+        Optional<Faculty> faculty = facultyRepository.findById(id);
+        if (faculty.isPresent()){
+            return faculty.get();
         }
-        return facultyRepository.findById(id).get();
+        throw new RuntimeException("Факультет c id " + id + " не найден");
     }
-    @Override
-    public Faculty update(Long id, String name,String color){
-        Optional<Faculty> facultyInOpt = facultyRepository.findById(id);
-        if (facultyInOpt.isEmpty()) {
+    public Faculty update(Long id, String name, String color) {
+        Optional<Faculty> facultyForUpdateOpt = facultyRepository.findById(id);
+        if (facultyForUpdateOpt.isEmpty()) {
             throw new RuntimeException("Факультет c id " + id + " не найден");
         }
-        Faculty faculty = facultyInOpt.get();
-        faculty.setName(name);
-        faculty.setColor(color);
-        facultyRepository.save(faculty);
-        return faculty;
+        Faculty facultyForUpdate = facultyForUpdateOpt.get();
+        facultyForUpdate.setName(name);
+        facultyForUpdate.setColor(color);
+
+        facultyRepository.save(facultyForUpdate);
+        return facultyForUpdate;
     }
     @Override
     public Collection<Faculty> getAll(){
@@ -67,6 +62,10 @@ public class FacultyServiceImpl implements  FacultyService{
     }
     @Override
     public Faculty findByStudents_id(Long students_id){
-        return facultyRepository.findFacultyByStudents_id(students_id);
+        Optional<Faculty> faculty = Optional.ofNullable(facultyRepository.findFacultyByStudents_id(students_id));
+        if (faculty.isPresent()){
+            return faculty.get();
+        }
+        throw new RuntimeException(("Факультет c students_id " + students_id + " не найден"));
     }
 }
