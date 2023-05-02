@@ -1,7 +1,6 @@
 package ru.hogwards.school.controllerTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,26 +8,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.hogwards.school.controller.FacultyController;
 import ru.hogwards.school.model.Faculty;
-import ru.hogwards.school.model.Student;
 import ru.hogwards.school.repository.FacultyRepository;
-import ru.hogwards.school.service.FacultyService;
 import ru.hogwards.school.service.FacultyServiceImpl;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(FacultyController.class)
@@ -65,7 +55,7 @@ public class FacultyControllerTest {
 
 
         //Подготовка ожидаемого результата
-        when(service.add("1234","123")).thenReturn(faculty);
+        when(service.add(anyString(),anyString())).thenReturn(faculty);
 
         //Начало теста
         mockMvc.perform(MockMvcRequestBuilders

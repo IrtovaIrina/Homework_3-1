@@ -33,7 +33,7 @@ public class FacultyServiceImpl implements  FacultyService{
     }
 
     @Override
-    public Faculty find(Long id) throws Exception {
+    public Faculty find(Long id) {
         Optional<Faculty> faculty = facultyRepository.findById(id);
         if (faculty.isPresent()){
             return faculty.get();

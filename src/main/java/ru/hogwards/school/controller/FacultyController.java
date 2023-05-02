@@ -6,22 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwards.school.model.Faculty;
 import ru.hogwards.school.repository.FacultyRepository;
-import ru.hogwards.school.service.FacultyService;
 import ru.hogwards.school.service.FacultyServiceImpl;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
 
     private final FacultyServiceImpl facultyService;
-    private final FacultyRepository facultyRepository;
     @Autowired
-    public FacultyController(FacultyServiceImpl facultyService, FacultyRepository facultyRepository) {
+    public FacultyController(FacultyServiceImpl facultyService) {
         this.facultyService = facultyService;
-        this.facultyRepository = facultyRepository;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
@@ -30,8 +26,8 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public Faculty getFaculty(@PathVariable Long id) throws Exception {
-        return facultyService.find(id);
+    public Faculty getFaculty(@PathVariable Long id) {
+            return facultyService.find(id);
     }
 
     @PostMapping
@@ -44,7 +40,7 @@ public class FacultyController {
         return facultyService.update(id, name, color);
     }
     @DeleteMapping("{id}")
-    public Faculty deleteFaculty(@PathVariable Long id) {
+    public Faculty deleteFaculty(@PathVariable Long id)  {
         return facultyService.remove(id);
     }
     @GetMapping//ok
