@@ -87,8 +87,7 @@ public class FacultyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/{id}?name=1234&color=123",1L)
-                        //.content(objectMapper.w(List.of(faculty))
-                        //.contentType(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -98,7 +97,7 @@ public class FacultyControllerTest {
         when(service.findByStudents_id(any(Long.class))).thenReturn(faculty);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/{student_id}",1L)
+                        .get("/faculty/student_id/{student_id}",1L)
                         .content(objectMapper.writeValueAsString(faculty))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

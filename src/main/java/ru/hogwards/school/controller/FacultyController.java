@@ -26,7 +26,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")//
-    public Faculty getFaculty(@RequestParam Long id) {
+    public Faculty getFaculty(@PathVariable Long id) {
         return facultyService.find(id);
     }
     @PostMapping
@@ -52,8 +52,8 @@ public class FacultyController {
         }
     }
     @GetMapping("/student_id/{student_id}")
-    public ResponseEntity<Faculty> findByStudents_id(@PathVariable Long students_id){
-        return ResponseEntity.ok(facultyService.findByStudents_id(students_id));
+    public Faculty findByStudents_id(@PathVariable Long students_id){
+        return facultyService.findByStudents_id(students_id);
     }
 
 }
