@@ -87,8 +87,8 @@ public class FacultyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/{id}?name=1234&color=123",1L)
-                        //.content(objectMapper.writeValueAsString(List.of(faculty))
-                        .contentType(MediaType.APPLICATION_JSON)
+                        //.content(objectMapper.w(List.of(faculty))
+                        //.contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
