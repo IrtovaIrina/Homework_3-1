@@ -15,6 +15,7 @@ import ru.hogwards.school.service.StudentServiceImpl;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {StudentServiceImpl.class})
@@ -24,8 +25,8 @@ public class StudentServiceImplTest {
     private StudentService service;
     @MockBean
     private StudentRepository repository;
-    Student q = new Student("Ron", 15);
-    Student q2 = new Student("Harry", 14);
+    Student q = new Student(1L,"Ron", 15);
+    Student q2 = new Student(1L,"Harry", 14);
     private Collection<Student> students = new ArrayList<>();
 
     @Test
@@ -36,12 +37,12 @@ public class StudentServiceImplTest {
 
     @Test
     public void find_success() {
-        when(repository.findById(1L)).thenReturn(Optional.ofNullable(q));
-        Assertions.assertEquals(service.remove(1L), q);
+        when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(q));
+        Assertions.assertEquals(service.find(1L), q);
     }
     @Test
     public void find_withRuntimeException(){
-        when(repository.findById(1L)).thenReturn(null);
+        when(repository.findById(any(Long.class))).thenReturn(null);
         assertThrows(RuntimeException.class,
                 () -> { service.find(1L);
                 });
@@ -49,24 +50,24 @@ public class StudentServiceImplTest {
 
     @Test
     public void remove_success() {
-        when(repository.findById(1L)).thenReturn(Optional.ofNullable(q));
+        when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(q));
         Assertions.assertEquals(service.remove(1L), q);
     }
     @Test
     public void remove_withRuntimeException(){
-        when(repository.findById(1L)).thenReturn(null);
+        when(repository.findById(any(Long.class))).thenReturn(null);
         assertThrows(RuntimeException.class,
                 () -> { service.remove(1L);
                 });
     }
     @Test
     public void update_success() {
-        when(repository.findById(1L)).thenReturn(Optional.ofNullable(q));
+        when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(q));
         Assertions.assertEquals(service.update(1L,"Harry", 14 ), q2);
     }
     @Test
     public void update_withRuntimeException(){
-        when(repository.findById(1L)).thenReturn(null);
+        when(repository.findById(any(Long.class))).thenReturn(null);
         assertThrows(RuntimeException.class,
                 () -> { service.update(1L,"Harry", 14 );
                 });

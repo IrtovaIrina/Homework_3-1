@@ -19,8 +19,7 @@ public class FacultyServiceImpl implements  FacultyService{
         Faculty faculty = new Faculty();
         faculty.setName(name);
         faculty.setColor(color);
-        facultyRepository.save(faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
     @Override
     public Faculty remove(Long id) {

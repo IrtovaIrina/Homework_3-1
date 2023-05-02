@@ -8,13 +8,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.hogwards.school.model.Faculty;
-import ru.hogwards.school.model.Student;
 import ru.hogwards.school.repository.FacultyRepository;
-import ru.hogwards.school.repository.StudentRepository;
 import ru.hogwards.school.service.FacultyService;
 import ru.hogwards.school.service.FacultyServiceImpl;
-import ru.hogwards.school.service.StudentService;
-import ru.hogwards.school.service.StudentServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {FacultyServiceImpl.class})
@@ -31,24 +28,24 @@ public class FacultyServiceImplTest {
     private FacultyService service;
     @MockBean
     private FacultyRepository repository;
-    Faculty q = new Faculty("Grifindor", "Red");
-    Faculty q2 = new Faculty("Sliserin", "Blue");
+    Faculty faculty = new Faculty(1L,"Grifindor", "Red");
+    Faculty faculty1 = new Faculty(1L,"Sliserin", "Blue");
     private Collection<Faculty> faculties = new ArrayList<>();
 
     @Test
-    public void add_success() {
-        when(repository.save(q)).thenReturn(q);
-        Assertions.assertEquals(service.add("Grifindor", "Red"), q);
+    public void add_success()  {
+        when(repository.save(faculty)).thenReturn(faculty);
+        Assertions.assertEquals(service.add("Grifindor", "Red"), faculty);
     }
 
     @Test
-    public void find_success() {
-        when(repository.findById(1L)).thenReturn(Optional.ofNullable(q));
-
+    public void find_success() throws Exception {
+        when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(faculty));
+        Assertions.assertEquals(service.find(1L), faculty);
     }
     @Test
     public void find_withRuntimeException(){
-        when(repository.findById(1L)).thenReturn(null);
+        when(repository.findById(any(Long.class))).thenReturn(null);
         assertThrows(RuntimeException.class,
                 () -> { service.find(1L);
                 });
@@ -56,8 +53,8 @@ public class FacultyServiceImplTest {
 
     @Test
     public void remove_success() {
-        when(repository.findById(1L)).thenReturn(Optional.ofNullable(q));
-        //Assertions.assertEquals(service.deleteFaculty(1L);, q);
+        when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(faculty));
+        Assertions.assertEquals(service.remove(1L), faculty);
     }
     @Test
     public void remove_withRuntimeException(){
@@ -68,8 +65,8 @@ public class FacultyServiceImplTest {
     }
     @Test
     public void update_success() {
-        when(repository.findById(1L)).thenReturn(Optional.ofNullable(q));
-        Assertions.assertEquals(service.update(1L,"Sliserin", "Blue" ), q2);
+        when(repository.findById(any(Long.class))).thenReturn(Optional.ofNullable(faculty));
+        Assertions.assertEquals(service.update(1L,"Sliserin", "Blue" ), faculty1);
     }
     @Test
     public void update_withRuntimeException(){
@@ -81,8 +78,8 @@ public class FacultyServiceImplTest {
 
     @Test
     public void getAll_success() {
-        faculties.add(q);
-        faculties.add(q2);
+        faculties.add(faculty);
+        faculties.add(faculty1);
         when(repository.findAll()).thenReturn((List<Faculty>) faculties);
         Assertions.assertEquals(service.getAll(), faculties);
     }
