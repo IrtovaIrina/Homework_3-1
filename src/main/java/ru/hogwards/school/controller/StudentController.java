@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwards.school.model.Student;
 import ru.hogwards.school.repository.StudentRepository;
 import ru.hogwards.school.service.StudentService;
+import ru.hogwards.school.service.StudentServiceImpl;
 
 import java.util.Collection;
 
@@ -14,9 +15,9 @@ import java.util.Collection;
 @RequestMapping("/student")
 public class StudentController {
 
-    private final StudentService studentService;
+    private final StudentServiceImpl studentService;
     @Autowired
-    public StudentController(StudentService studentService, StudentRepository studentRepository){
+    public StudentController(StudentServiceImpl studentService){
         this.studentService = studentService;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -25,8 +26,8 @@ public class StudentController {
         return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id){
-        return ResponseEntity.ok(studentService.find(id));
+    public Student getStudent(@PathVariable Long id){
+        return studentService.find(id);
     }
     @PostMapping
     public Student createStudent(@RequestParam("name") String name , @RequestParam("age") int age
@@ -37,12 +38,12 @@ public class StudentController {
         return studentService.add(name,age,facultyId);
     }
     @PutMapping("{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("age") int age){
-        return ResponseEntity.ok(studentService.update(id,name,age));
+    public Student updateStudent(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("age") int age){
+        return studentService.update(id,name,age);
     }
     @DeleteMapping("{id}")
-    public  ResponseEntity<Student> deleteStudent(@PathVariable Long id){
-        return ResponseEntity.ok(studentService.remove(id));
+    public  Student deleteStudent(@PathVariable Long id){
+        return studentService.remove(id);
     }
     @GetMapping
     public Collection<Student> getAllByAge(@RequestParam(required = false) int min
@@ -53,8 +54,8 @@ public class StudentController {
             return studentService.getAll();
         }
     }
-    @GetMapping("{students_id}")
-    public ResponseEntity<Collection<Student>> findByFaculty_id(@RequestParam("students_id")Long students_id){
-        return ResponseEntity.ok(studentService.findByFaculty_id(students_id));
+    @GetMapping("faculty_id/{faculty_id}")
+    public Collection<Student> findByFaculty_id(@PathVariable("faculty_id")Long faculty_id){
+        return studentService.findByFaculty_id(faculty_id);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwards.school.controller.FacultyController;
 import ru.hogwards.school.model.Faculty;
+import ru.hogwards.school.model.Student;
 import ru.hogwards.school.service.FacultyServiceImpl;
 
 import java.util.List;
@@ -26,7 +27,6 @@ public class FacultyControllerTest {
     ObjectMapper objectMapper;
     @MockBean
     private FacultyServiceImpl service;
-
     final Faculty faculty = new Faculty(1L,"1234","123");
     final Faculty faculty2 = new Faculty(1L,"12345","1234");
 

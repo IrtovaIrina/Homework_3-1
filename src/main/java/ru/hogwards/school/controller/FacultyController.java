@@ -2,10 +2,8 @@ package ru.hogwards.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwards.school.model.Faculty;
-import ru.hogwards.school.repository.FacultyRepository;
 import ru.hogwards.school.service.FacultyServiceImpl;
 
 import java.util.Collection;
@@ -26,7 +24,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")//
-    public Faculty getFaculty(@PathVariable Long id) {
+    public Faculty getFaculty(@PathVariable("id") Long id) {
         return facultyService.find(id);
     }
     @PostMapping
@@ -35,7 +33,7 @@ public class FacultyController {
     }
 
     @PutMapping("{id}")
-    public Faculty updateFaculty(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("color") String color) {
+    public Faculty updateFaculty(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("color") String color) {
         return facultyService.update(id, name, color);
     }
     @DeleteMapping("{id}")
@@ -51,8 +49,8 @@ public class FacultyController {
             return facultyService.getAllByNameAndColor(name, color);
         }
     }
-    @GetMapping("/student_id/{student_id}")
-    public Faculty findByStudents_id(@PathVariable Long students_id){
+    @GetMapping("student_id/{student_id}")
+    public Faculty findByStudents_id(@PathVariable("student_id") Long students_id){
         return facultyService.findByStudents_id(students_id);
     }
 
