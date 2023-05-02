@@ -25,11 +25,10 @@ public class FacultyController {
         return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
-    @GetMapping("{id}")
-    public Faculty getFaculty(@PathVariable Long id) {
-            return facultyService.find(id);
+    @GetMapping("{id}")//
+    public Faculty getFaculty(@RequestParam Long id) {
+        return facultyService.find(id);
     }
-
     @PostMapping
     public Faculty createFaculty(@RequestParam("name") String name, @RequestParam("color") String color) {
         return facultyService.add(name, color);
@@ -52,8 +51,8 @@ public class FacultyController {
             return facultyService.getAllByNameAndColor(name, color);
         }
     }
-    @GetMapping("{students_id}")
-    public ResponseEntity<Faculty> findByStudents_id(@RequestParam("students_id")Long students_id){
+    @GetMapping("/student_id/{student_id}")
+    public ResponseEntity<Faculty> findByStudents_id(@PathVariable Long students_id){
         return ResponseEntity.ok(facultyService.findByStudents_id(students_id));
     }
 
