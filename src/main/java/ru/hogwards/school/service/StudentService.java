@@ -3,7 +3,6 @@ package ru.hogwards.school.service;
 import ru.hogwards.school.model.Student;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 public interface StudentService {
     Student add(String name, int age, Long facultyId);
@@ -14,5 +13,8 @@ public interface StudentService {
     Collection<Student> getAll();
     Collection<Student> getAllByAge(int min, int max);
     Collection<Student> findByFaculty_id(Long faculty_id);
+    int countOfStudents();
+    float averageAge ();
+    Collection<Student> lastFiveStudents();
 
 }

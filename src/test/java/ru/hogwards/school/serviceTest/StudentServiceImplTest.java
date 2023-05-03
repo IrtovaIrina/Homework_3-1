@@ -9,10 +9,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.hogwards.school.model.Student;
 import ru.hogwards.school.repository.StudentRepository;
+import ru.hogwards.school.service.FacultyServiceImpl;
 import ru.hogwards.school.service.StudentService;
 import ru.hogwards.school.service.StudentServiceImpl;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,12 +26,16 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {StudentServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 public class StudentServiceImplTest {
-    @Autowired
-    private StudentService service;
+    private StudentServiceImpl service;
+
+    public StudentServiceImplTest(StudentServiceImpl service) {
+        this.service = service;
+    }
+
     @MockBean
     private StudentRepository repository;
-    Student q = new Student(1L,"Ron", 15);
-    Student q2 = new Student(1L,"Harry", 14);
+    Student q = new Student("Ron", 15);
+    Student q2 = new Student("Harry", 14);
     private Collection<Student> students = new ArrayList<>();
 
     @Test

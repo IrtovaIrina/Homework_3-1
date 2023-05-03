@@ -9,8 +9,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 public interface AvatarService {
-    void upload(Long studentId, MultipartFile file) throws IOException;
+    Avatar upload(Long studentId, MultipartFile file) throws IOException;
     Avatar findAvatar(Long bookId);
-    void deleteAvatarById(Long id);
-    Collection<Avatar> getAllAvatars();
+    Collection<Avatar> getAllAvatars(int page, int size);
 }

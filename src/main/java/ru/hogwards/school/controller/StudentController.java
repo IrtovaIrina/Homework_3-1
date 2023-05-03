@@ -20,6 +20,7 @@ public class StudentController {
     public StudentController(StudentServiceImpl studentService){
         this.studentService = studentService;
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
     public String handleException(Exception e) {
@@ -57,5 +58,17 @@ public class StudentController {
     @GetMapping("faculty_id/{faculty_id}")
     public Collection<Student> findByFaculty_id(@PathVariable("faculty_id")Long faculty_id){
         return studentService.findByFaculty_id(faculty_id);
+    }
+    @GetMapping("/count")
+    public int studentsCount(){
+        return studentService.countOfStudents();
+    }
+    @GetMapping("/average-age")
+    public float averageAge(){
+        return studentService.averageAge();
+    }
+    @GetMapping("/last-five-students")
+    public Collection<Student> lastFiveStudents(){
+        return studentService.lastFiveStudents();
     }
 }

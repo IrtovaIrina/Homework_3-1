@@ -22,6 +22,12 @@ public class AvatarController {
     public AvatarController(AvatarService avatarService) {
         this.avatarService = avatarService;
     }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(Exception.class)
+    public String handleException(Exception e) {
+        return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
 
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long id,
@@ -31,12 +37,6 @@ public class AvatarController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping(value = "/{id}/avatar")
-    public ResponseEntity<Void> deleteAvatarById(@PathVariable Long id) {
-        avatarService.deleteAvatarById(id);
         return ResponseEntity.ok().build();
     }
 
@@ -69,8 +69,8 @@ public class AvatarController {
                     .body(e.getMessage().getBytes(StandardCharsets.UTF_8));
         }
     }
-    @GetMapping(value = "/avatars")
-    public Collection<Avatar> getAllAvatars() {
-        return avatarService.getAllAvatars();
+    @GetMapping(value = "/avatars/{page}")
+    public Collection<Avatar> getAllAvatars(@PathVariable ("page") int page, @RequestParam("size") int size) {
+        return avatarService.getAllAvatars(page, size);
     }
 }
