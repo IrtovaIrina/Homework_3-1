@@ -1,18 +1,48 @@
 package ru.hogwards.school.model;
 
-public class Student {
-    private Long id;
-    private String name;
-    private int age;
-    private static Long studentsCount = -1L;
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
+import javax.persistence.*;
+import java.util.Objects;
+@Entity
+public class Student {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String name;
+    private int age;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Student(Long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public Student() {
+    }
+
+    public long getId() {
+        return id;
+    }
     public String getName() {
         return name;
     }
@@ -29,10 +59,16 @@ public class Student {
         this.age = age;
     }
 
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-        studentsCount++;
-        id = studentsCount;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && id.equals(student.id) && name.equals(student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age);
     }
 }
