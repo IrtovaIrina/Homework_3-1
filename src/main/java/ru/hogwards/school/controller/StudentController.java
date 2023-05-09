@@ -47,7 +47,7 @@ public class StudentController {
         return studentService.remove(id);
     }
     @GetMapping
-    public Collection<Student> getAllByAge(@RequestParam(required = false) int min
+    public Collection<Student> getAll(@RequestParam(required = false) int min
             , @RequestParam(required = false) int max ){
         if (min !=0 && max !=0) {
             return studentService.getAllByAge(min, max);

@@ -41,7 +41,7 @@ public class FacultyController {
         return facultyService.remove(id);
     }
     @GetMapping//ok
-    public Collection<Faculty> getAllByNameAndColor(@RequestParam(required = false) String name
+    public Collection<Faculty> getAll(@RequestParam(required = false) String name
             , @RequestParam(required = false) String color) {
         if (name.isBlank() && color.isBlank()) {
             return facultyService.getAll();

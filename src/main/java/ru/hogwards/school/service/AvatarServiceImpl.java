@@ -1,5 +1,7 @@
 package ru.hogwards.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -24,6 +25,7 @@ public class AvatarServiceImpl implements AvatarService{
     private final StudentService studentService;
     @Value("${student.avatar.dir.path}")
     private String avatarDir;
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     public AvatarServiceImpl(AvatarRepository repository, StudentService studentService) {
         this.repository = repository;
@@ -31,6 +33,7 @@ public class AvatarServiceImpl implements AvatarService{
     }
     @Override
     public Avatar upload(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Был вызван метод uploadAvatar");
         Student student = studentService.find(studentId);
         Path filePath = Path.of(avatarDir, student + "." + getExtension(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -49,17 +52,18 @@ public class AvatarServiceImpl implements AvatarService{
         avatar.setFileSize(avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
-        repository.save(avatar);
-        return avatar;
+        return repository.save(avatar);
     }
     @Override
     public Avatar findAvatar(Long studentId) {
+        logger.info("Был вызван метод findAvatar");
         return repository.findByStudent_id(studentId);
     }
     private String getExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
     public Collection<Avatar> getAllAvatars(int page, int size) {
+        logger.info("Был вызван метод getAllAvatars");
         PageRequest pageRequest = PageRequest.of(page, size);
         return repository.findAll(pageRequest).getContent();
     }
