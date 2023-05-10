@@ -16,5 +16,7 @@ public interface StudentService {
     int countOfStudents();
     float averageAge ();
     Collection<Student> lastFiveStudents();
+    Collection<Student> studentsWithA();
+    double averageAgeWithStream();
 
 }

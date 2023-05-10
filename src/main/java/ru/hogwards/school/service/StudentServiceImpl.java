@@ -1,5 +1,6 @@
 package ru.hogwards.school.service;
 
+import org.apache.logging.log4j.util.PropertySource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import ru.hogwards.school.repository.FacultyRepository;
 import ru.hogwards.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -106,5 +109,17 @@ public class StudentServiceImpl implements StudentService{
     public Collection<Student> lastFiveStudents(){
         logger.info("Был вызван метод lastFiveStudents");
         return studentRepository.lastFiveStudents();
+    }
+    @Override
+    public Collection<Student> studentsWithA(){
+        return  studentRepository.findAll().stream()
+                .sorted(Comparator.comparing(Student::getName))
+                .filter(x -> x.getName().indexOf(0) == 'A').toList();
+    }
+    @Override
+    public double averageAgeWithStream(){
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average().orElse(0);
     }
 }

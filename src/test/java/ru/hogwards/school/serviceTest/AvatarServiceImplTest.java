@@ -32,16 +32,16 @@ public class AvatarServiceImplTest {
     private AvatarRepository repository;
     @MockBean
     private StudentService studentService;
-    Student student = new Student("1",1)
+    Student student = new Student("1",1);
     Avatar avatar = new Avatar("1",1L,"1",new byte[]{1},student);
     //Avatar upload(Long studentId, MultipartFile file) throws IOException;
     //Avatar findAvatar(Long bookId);
     //Collection<Avatar> getAllAvatars(int page, int size);
-    MultipartFile file = new MultipartFil
+
     @Test
     public void upload_success() throws IOException {
         when(studentService.find(any(Long.class))).thenReturn(student);
         when(repository.save(avatar)).thenReturn(avatar);
-        Assertions.assertEquals(service.upload(1L,));
+
     }
 }

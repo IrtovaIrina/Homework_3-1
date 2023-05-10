@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -66,5 +67,11 @@ public class AvatarServiceImpl implements AvatarService{
         logger.info("Был вызван метод getAllAvatars");
         PageRequest pageRequest = PageRequest.of(page, size);
         return repository.findAll(pageRequest).getContent();
+    }
+    public int getInt(){
+        return Stream.iterate(1, a -> a +1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, Integer::sum);
     }
 }

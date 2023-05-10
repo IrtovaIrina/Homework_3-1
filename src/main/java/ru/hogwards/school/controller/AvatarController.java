@@ -73,4 +73,8 @@ public class AvatarController {
     public Collection<Avatar> getAllAvatars(@PathVariable ("page") int page, @RequestParam("size") int size) {
         return avatarService.getAllAvatars(page, size);
     }
+    @GetMapping(value = "/get-int")
+    public Integer getInt() {
+        return avatarService.getInt();
+    }
 }

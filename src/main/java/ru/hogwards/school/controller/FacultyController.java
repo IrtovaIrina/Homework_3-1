@@ -53,5 +53,9 @@ public class FacultyController {
     public Faculty findByStudents_id(@PathVariable("student_id") Long students_id){
         return facultyService.findByStudents_id(students_id);
     }
+    @GetMapping("most-long-name")
+    public String mostLongName(){
+        return facultyService.mostLongName();
+    }
 
 }

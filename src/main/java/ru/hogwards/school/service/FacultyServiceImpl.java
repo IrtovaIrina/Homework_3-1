@@ -5,10 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwards.school.model.Faculty;
+import ru.hogwards.school.model.Student;
 import ru.hogwards.school.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class FacultyServiceImpl implements  FacultyService{
     private final FacultyRepository facultyRepository;
@@ -76,5 +80,12 @@ public class FacultyServiceImpl implements  FacultyService{
             return faculty.get();
         }
         throw new RuntimeException(("Факультет c students_id " + students_id + " не найден"));
+    }
+    @Override
+    public String mostLongName(){
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse("Не добавлен ни один факультет");
     }
 }
