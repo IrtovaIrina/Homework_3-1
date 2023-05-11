@@ -18,5 +18,7 @@ public interface StudentService {
     Collection<Student> lastFiveStudents();
     Collection<Student> studentsWithA();
     double averageAgeWithStream();
+    void get6Students();
+    void get6StudentsSynchronized();
 
 }

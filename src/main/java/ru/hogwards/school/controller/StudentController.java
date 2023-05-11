@@ -79,5 +79,13 @@ public class StudentController {
     public double averageAgeWithStream(){
         return studentService.averageAgeWithStream();
     }
+    @GetMapping(value = "/6-students")
+    public  void get6Students() {
+        studentService.get6Students();
+    }
+    @GetMapping(value = "/6-students-synchronized")
+    public  void get6StudentsSynchronized() {
+        studentService.get6StudentsSynchronized();
+    }
 
 }

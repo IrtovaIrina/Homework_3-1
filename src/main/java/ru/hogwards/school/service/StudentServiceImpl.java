@@ -10,9 +10,7 @@ import ru.hogwards.school.model.Student;
 import ru.hogwards.school.repository.FacultyRepository;
 import ru.hogwards.school.repository.StudentRepository;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
@@ -121,5 +119,36 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.findAll().stream()
                 .mapToDouble(Student::getAge)
                 .average().orElse(0);
+    }
+    @Override
+    public void get6Students(){
+        List<String> collection = studentRepository.findAll().stream().limit(6).map(Student::getName).toList();
+        System.out.println(collection.get(0));
+        System.out.println(collection.get(1));
+        new Thread(() -> {
+            System.out.println(collection.get(2));
+            System.out.println(collection.get(3));
+        });
+        new Thread(() -> {
+            System.out.println(collection.get(4));
+            System.out.println(collection.get(5));
+        });
+    }
+    @Override
+    public synchronized void get6StudentsSynchronized(){
+        List<String> collection = studentRepository.findAll().stream().limit(6).map(Student::getName).toList();
+        print(collection.get(0));
+        print(collection.get(1));
+        new Thread(() -> {
+            print(collection.get(2));
+            print(collection.get(3));
+        });
+        new Thread(() -> {
+            print(collection.get(4));
+            print(collection.get(5));
+        });
+    }
+    private synchronized void print(String str){
+        System.out.println(str);
     }
 }
